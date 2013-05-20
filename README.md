@@ -8,6 +8,7 @@ xbase64 is a fast javascript base64 encoder and decoder;
 ## Is it the fastest?
 
 As far as I know it's fast enough. Although it depends on far too many variables to enumerate, I wrote a test, the result below is for reference.
+
 Tell me if you know a faster one.
 
         ------ Chrome ( 1000 TIMES ) ------
@@ -61,5 +62,5 @@ XBase64.decode('aGVsbG8gd29ybGQ=');
 ```
 
 ## See Also
-[http://en.wikipedia.org/wiki/Utf8](http://en.wikipedia.org/wiki/Utf8)
-[https://developer.mozilla.org/en-US/docs/Web/API/window.btoa](https://developer.mozilla.org/en-US/docs/Web/API/window.btoa)
+ * [http://en.wikipedia.org/wiki/Utf8](http://en.wikipedia.org/wiki/Utf8)
+ * [https://developer.mozilla.org/en-US/docs/Web/API/window.btoa](https://developer.mozilla.org/en-US/docs/Web/API/window.btoa)
