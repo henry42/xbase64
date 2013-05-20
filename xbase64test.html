@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title> Base64 Speed Test </title>
+  <script src="xbase64.js"></script>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="https://raw.github.com/mshang/base64-js/master/base64.js"></script>
+  <script src="https://raw.github.com/dankogai/js-base64/master/base64.min.js"></script>
+  <script src="https://raw.github.com/carlo/jquery-base64/master/jquery.base64.min.js"></script>
+ </head>
+
+ <body>
+
+  <script type="text/javascript">
+  <!--
+
+	var txt = "Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.";
+
+	var etxt = XBase64.encode(txt);
+
+    var QA = [
+        {Q:'中文',A:'5Lit5paH'},
+        {Q:'1',A:'MQ=='},
+        {Q:'12',A:'MTI='},
+        {Q:'123',A:'MTIz'},
+        {Q:'1234',A:'MTIzNA=='},
+        {Q: txt,A: 'TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4='}
+    ];
+
+    for( var i = 0 , question ; question = QA[i] ; i++ ){
+        document.write('Test encode <i>' + question.Q + '</i> : ');
+        document.write( ( XBase64.encode( question.Q ) === question.A ) ? "<b style='color:#008000;'>okay</b>" : "<b style='color:#FF0000;'>error</b>" );
+        document.write('<br>');
+        document.write('Test decode <i>' + question.A + '</i> : ');
+        document.write( ( XBase64.decode( question.A ) === question.Q ) ? "<b style='color:#008000;'>okay</b>" : "<b style='color:#FF0000;'>error</b>" );
+        document.write('<br>');
+    }
+
+    document.write('<br><br>--------- TEST SPEED ---------');
+
+
+	var TIMES = 1000;
+	
+	var TEST = [
+		
+		{
+			name : 'BASE64 encode from https://github.com/mshang/base64-js',
+			func : base64.encode,
+			context : base64
+		},
+		
+		{
+			name : 'BASE64 encode from https://github.com/dankogai/js-base64',
+			func : Base64.encode,
+			context : Base64
+		},
+		{
+			name : 'BASE64 encode from https://github.com/carlo/jquery-base64',
+			func : $.base64.encode,
+			context : $.base64
+		},
+		{
+			name : 'xbase64 encode time',
+			func : XBase64.encode
+		},
+		
+		{
+			name : 'BASE64 decode from https://github.com/mshang/base64-js',
+			func : base64.decode,
+			context : base64
+		},
+
+		{
+			name : 'BASE64 decode from https://github.com/dankogai/js-base64',
+			func : Base64.decode,
+			context : Base64
+		},
+		{
+			name : 'BASE64 decode from https://github.com/carlo/jquery-base64',
+			func : $.base64.decode,
+			context : $.base64
+		},
+		{
+			name : 'xbase64 decode time',
+			func : XBase64.decode
+		}
+
+	];
+	
+	
+	setTimeout( function( ){
+	
+		var result = [];
+	
+		for( var j = 0 , test , start , end , err ; test = TEST[j] ; j++ ){
+			
+			var text = /encode/.test(name) ? txt : etxt , 
+				context = test.context || window ,
+                err = false;
+			
+			start = new Date();
+            try{
+                for( var i = 0 ; i < TIMES ; i++){
+                    test.func.call( context , text);
+                }
+            }catch(e){
+                err = true;
+            }
+			end = new Date();
+			
+			result.push( '<BR>' + test.name + ( err ? ' ERROR' : ' costs ' + ( end - start )) );
+			
+		}
+		
+		$('#result').html( result.join('') );
+		
+	},1000);
+	
+
+  //-->
+  </script>
+
+  <div id="result"> Calculating </div>
+ </body>
+</html>
